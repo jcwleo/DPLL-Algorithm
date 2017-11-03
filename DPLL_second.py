@@ -3,7 +3,7 @@ from copy import deepcopy
 truth_assignment = []
 
 def remove_liter(cnf):
-    new_liters = list(''.join(cnf))
+    new_liters = list(set(''.join(cnf)))
     if '!' in new_liters:
         new_liters.remove('!')
     if '\n' in new_liters:
@@ -86,8 +86,7 @@ def dpll(cnf, liters):
     # checking clause
     if cnf == []:
         return True
-
-    if len(liters) == 1 and len(cnf) > 1:
+    elif len(liters) == 1 and len(cnf) > 1:
         return False
 
     # case-splitting
@@ -99,7 +98,7 @@ def dpll(cnf, liters):
 
 def main():
     global truth_assignment
-    input_cnf = open('input.txt', 'r').read()
+    input_cnf = open('7-20.txt', 'r').read()
     liters, cnf = preproc(input_cnf)
     if dpll(cnf, liters):
         print('--------------------------------------------------')
