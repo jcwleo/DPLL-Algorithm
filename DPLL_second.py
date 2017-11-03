@@ -121,7 +121,7 @@ def dpll(cnf, liters):
 
 def main():
     global truth_assignment
-    input_cnf = open('7-20.txt', 'r').read()
+    input_cnf = open('sample3.txt', 'r').read()
     liters, cnf = preproc(input_cnf)
 
     if dpll(cnf, liters):
