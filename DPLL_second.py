@@ -2,6 +2,7 @@ from copy import deepcopy
 
 truth_assignment = []
 
+
 def remove_liter(cnf):
     new_liters = list(set(''.join(cnf)))
     if '!' in new_liters:
@@ -30,7 +31,8 @@ def preproc(input_cnf):
 
 def dpll(cnf, liters):
     global truth_assignment
-    # unit prop
+
+    # ------------start unit propa-----------------
     while True:
         if len(liters) == 1 and len(cnf) > 1:
             print('--------------------------------------------------')
@@ -45,6 +47,7 @@ def dpll(cnf, liters):
         print('CNF : ', cnf)
         print('Liters : ', liters)
 
+        # find unit clause
         for i in range(len(cnf)):
             if ' ' not in cnf[i]:
                 unit_clause = cnf[i]
@@ -52,18 +55,16 @@ def dpll(cnf, liters):
                 print('Unit : ', unit_clause)
                 del cnf[i]
                 break
-                
+
+        # exception handle
         if unit_clause:
             for i in range(len(cnf)):
                 if '!' in unit_clause:
-                    if unit_clause.replace('!','') == cnf[i]:
+                    if unit_clause.replace('!', '') == cnf[i]:
                         return False
                 else:
-                    if '!'+unit_clause == cnf[i]:
+                    if '!' + unit_clause == cnf[i]:
                         return False
-
-
-
 
         if unit_clause and '!' not in unit_clause:
             for j in range(len(cnf)):
@@ -73,7 +74,7 @@ def dpll(cnf, liters):
                     else:
                         cnf[j] = cnf[j].replace('!' + unit_clause, ' ')
                         cnf[j] = cnf[j].strip(' ')
-                    # cnf.remove('')
+                        # cnf.remove('')
                 elif unit_clause in cnf[j]:
                     delete_list.append(j)
 
@@ -98,6 +99,7 @@ def dpll(cnf, liters):
 
         else:
             break
+    # --------------end unit propa----------------------
 
     # checking clause
     if cnf == []:
@@ -116,19 +118,21 @@ def main():
     global truth_assignment
     input_cnf = open('7-20.txt', 'r').read()
     liters, cnf = preproc(input_cnf)
+
     if dpll(cnf, liters):
         print('--------------------------------------------------')
         print('Result : Satisfiable')
+
+        # print truth assignment
         truth_assignment.sort()
         for i in truth_assignment:
             if '!' in i:
-                print(i.replace('!',''),' : False', end=' | ')
+                print(i.replace('!', ''), ' : False', end=' | ')
             else:
-                print(i,' : True', end=' | ')
+                print(i, ' : True', end=' | ')
     else:
         print('--------------------------------------------------')
         print('Result : UnSatisfiable')
-        print(truth_assignment)
 
 
 if __name__ == '__main__':
