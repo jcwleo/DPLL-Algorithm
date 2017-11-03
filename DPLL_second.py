@@ -1,7 +1,8 @@
 from copy import deepcopy
 
 truth_assignment = []
-
+unit_propa = 0
+splitting = -1
 
 def remove_liter(cnf):
     new_liters = list(set(''.join(cnf)))
@@ -30,7 +31,9 @@ def preproc(input_cnf):
 
 
 def dpll(cnf, liters):
-    global truth_assignment
+    global truth_assignment, unit_propa, splitting
+
+    splitting += 1
 
     # ------------start unit propa-----------------
     while True:
@@ -67,6 +70,7 @@ def dpll(cnf, liters):
                         return False
 
         if unit_clause and '!' not in unit_clause:
+            unit_propa += 1
             for j in range(len(cnf)):
                 if '!' + unit_clause in cnf[j]:
                     if '!' + unit_clause == cnf[j]:
@@ -83,6 +87,7 @@ def dpll(cnf, liters):
             liters = remove_liter(cnf)
 
         elif unit_clause and '!' in unit_clause:
+            unit_propa += 1
             for j in range(len(cnf)):
                 if unit_clause in cnf[j]:
                     delete_list.append(j)
@@ -124,8 +129,8 @@ def main():
         print('[Result] Satisfiable')
 
         # print truth assignment
-        for i in range(len(truth_assignment) - 1, 1, -1):
-            for j in range(i - 1, 0, -1):
+        for i in range(len(truth_assignment) - 1, 0, -1):
+            for j in range(i - 1, -1, -1):
                 if '!' in truth_assignment[i]:
                     if truth_assignment[i] == truth_assignment[j] or truth_assignment[i].replace('!', '') == \
                             truth_assignment[j]:
@@ -138,7 +143,7 @@ def main():
             truth_assignment = list(set(truth_assignment))
             truth_assignment.remove('')
 
-        truth_assignment.sort()
+
         print('[Truth Assignment] | ', end='')
         for i in truth_assignment:
             if '!' in i:
@@ -149,6 +154,8 @@ def main():
         print('--------------------------------------------------')
         print('[Result] UnSatisfiable')
 
+    print('\nUnit propagation Count : ', unit_propa)
+    print('Splitting Count : ', splitting)
 
 if __name__ == '__main__':
     main()
