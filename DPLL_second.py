@@ -121,10 +121,25 @@ def main():
 
     if dpll(cnf, liters):
         print('--------------------------------------------------')
-        print('Result : Satisfiable')
+        print('[Result] Satisfiable')
 
         # print truth assignment
+        for i in range(len(truth_assignment) - 1, 1, -1):
+            for j in range(i - 1, 0, -1):
+                if '!' in truth_assignment[i]:
+                    if truth_assignment[i] == truth_assignment[j] or truth_assignment[i].replace('!', '') == \
+                            truth_assignment[j]:
+                        truth_assignment[j] = ''
+                else:
+                    if truth_assignment[i] == truth_assignment[j]:
+                        truth_assignment[j] = ''
+
+        if '' in truth_assignment:
+            truth_assignment = list(set(truth_assignment))
+            truth_assignment.remove('')
+
         truth_assignment.sort()
+        print('[Truth Assignment] | ', end='')
         for i in truth_assignment:
             if '!' in i:
                 print(i.replace('!', ''), ' : False', end=' | ')
@@ -132,7 +147,7 @@ def main():
                 print(i, ' : True', end=' | ')
     else:
         print('--------------------------------------------------')
-        print('Result : UnSatisfiable')
+        print('[Result] UnSatisfiable')
 
 
 if __name__ == '__main__':
