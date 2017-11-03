@@ -14,6 +14,6 @@ A !E
 !B C
 ```
 ```
-python DPLL.py sample.txt
+python DPLL.py sampleCNF/sample.txt
 ```
 
