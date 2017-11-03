@@ -1,5 +1,5 @@
 # [implementing DPLL Algorithm]
-![Pseudo-code](/readme/pseude code.png)
+![Pseudo-code](/readme/pseudecode.png)
 
 ## example
 sample.txt(! is 'not')
@@ -14,6 +14,6 @@ A !E
 !B C
 ```
 ```
-python DPLL_second.py sample.txt
+python DPLL.py sample.txt
 ```
 
