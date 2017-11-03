@@ -52,14 +52,28 @@ def dpll(cnf, liters):
                 print('Unit : ', unit_clause)
                 del cnf[i]
                 break
+                
+        if unit_clause:
+            for i in range(len(cnf)):
+                if '!' in unit_clause:
+                    if unit_clause.replace('!','') == cnf[i]:
+                        return False
+                else:
+                    if '!'+unit_clause == cnf[i]:
+                        return False
+
+
+
 
         if unit_clause and '!' not in unit_clause:
-            # liters.remove(unit_clause)
-            # liters = remove_liter(cnf)
             for j in range(len(cnf)):
                 if '!' + unit_clause in cnf[j]:
-                    cnf[j] = cnf[j].replace('!' + unit_clause, ' ')
-                    cnf[j] = cnf[j].strip(' ')
+                    if '!' + unit_clause == cnf[j]:
+                        delete_list.append(j)
+                    else:
+                        cnf[j] = cnf[j].replace('!' + unit_clause, ' ')
+                        cnf[j] = cnf[j].strip(' ')
+                    # cnf.remove('')
                 elif unit_clause in cnf[j]:
                     delete_list.append(j)
 
@@ -68,14 +82,16 @@ def dpll(cnf, liters):
             liters = remove_liter(cnf)
 
         elif unit_clause and '!' in unit_clause:
-            # liters.remove(unit_clause.replace('!', ''))
-            # liters = remove_liter(cnf)
             for j in range(len(cnf)):
                 if unit_clause in cnf[j]:
                     delete_list.append(j)
                 elif unit_clause.replace('!', '') in cnf[j]:
-                    cnf[j] = cnf[j].replace(unit_clause.replace('!', ''), ' ')
-                    cnf[j] = cnf[j].strip(' ')
+                    if unit_clause.replace('!', '') == cnf[j]:
+                        delete_list.append(j)
+                    else:
+                        cnf[j] = cnf[j].replace(unit_clause.replace('!', ''), ' ')
+                        cnf[j] = cnf[j].strip(' ')
+
             for index in sorted(delete_list, reverse=True):
                 del cnf[index]
             liters = remove_liter(cnf)
@@ -103,6 +119,7 @@ def main():
     if dpll(cnf, liters):
         print('--------------------------------------------------')
         print('Result : Satisfiable')
+        truth_assignment.sort()
         for i in truth_assignment:
             if '!' in i:
                 print(i.replace('!',''),' : False', end=' | ')
