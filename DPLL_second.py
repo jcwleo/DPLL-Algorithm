@@ -1,3 +1,4 @@
+import sys
 from copy import deepcopy
 
 truth_assignment = []
@@ -121,7 +122,7 @@ def dpll(cnf, liters):
 
 def main():
     global truth_assignment
-    input_cnf = open('sample3.txt', 'r').read()
+    input_cnf = open(sys.argv[1], 'r').read()
     liters, cnf = preproc(input_cnf)
 
     if dpll(cnf, liters):
