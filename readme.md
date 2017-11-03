@@ -1,5 +1,5 @@
 # [implementing DPLL Algorithm]
-![Pseudo-code](/readme/pseudecode.png)
+![Pseudo-code](/readme/pseudocode.png)
 
 ## example
 sample.txt(! is 'not')
