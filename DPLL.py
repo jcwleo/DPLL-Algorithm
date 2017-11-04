@@ -127,7 +127,7 @@ def main():
 
     if dpll(cnf, liters):
         print('--------------------------------------------------')
-        print('[Result] Satisfiable')
+        print('[Result] : Satisfiable')
 
         # print truth assignment
         for i in range(len(truth_assignment) - 1, 0, -1):
@@ -151,12 +151,13 @@ def main():
                 print(i.replace('!', ''), ' : False', end=' | ')
             else:
                 print(i, ' : True', end=' | ')
+        print('\n')
     else:
         print('--------------------------------------------------')
-        print('[Result] UnSatisfiable')
+        print('[Result] : UnSatisfiable')
 
-    print('\nUnit propagation Count : ', unit_propa)
-    print('Splitting Count : ', splitting)
+    print('[Unit propagation Count] : ', unit_propa)
+    print('[Splitting Count] : ', splitting)
 
 if __name__ == '__main__':
     main()
