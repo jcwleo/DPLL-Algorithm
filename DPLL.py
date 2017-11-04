@@ -151,7 +151,7 @@ def main():
                 print(i.replace('!', ''), ' : False', end=' | ')
             else:
                 print(i, ' : True', end=' | ')
-        print('\n')
+        print('')
     else:
         print('--------------------------------------------------')
         print('[Result] : UnSatisfiable')
